@@ -125,9 +125,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <a class="nav-item" href="<?= site_url('client_dashboard.php'); ?>">Dashboard</a>
                 <a class="nav-link" href="<?= site_url('home'); ?>">Home</a>
-                <a class="nav-link" href="<?= site_url('pekerjaan'); ?>">Pekerjaan</a>
+                <a class="nav-link" href="<?= site_url('freelancer_dashboard'); ?>">Pekerjaan</a>
                 <a class="nav-link" href="<?= site_url('about'); ?>">About</a>
                 <a class="nav-link" href="<?= site_url('signin'); ?>">Sign In</a>
                 <a class="nav-link" href="<?= site_url('signup'); ?>">Sign Up</a>

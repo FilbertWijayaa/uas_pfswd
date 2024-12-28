@@ -5,7 +5,7 @@ class User_model extends CI_Model {
     {
         parent::__construct();
         // Memuat database
-        $this->load->database(); // Memastikan database dimuat
+        $this->load->database();
     }
 
     // Mendapatkan data user berdasarkan email
@@ -13,6 +13,14 @@ class User_model extends CI_Model {
     {
         $query = $this->db->get_where('users', ['email' => $email]);
         return $query->row_array();  // Mengembalikan data user dalam bentuk array
+    }
+
+    // Memperbarui role user berdasarkan ID
+    public function update_user_role($user_id, $role)
+    {
+        $this->db->set('role', $role);
+        $this->db->where('id', $user_id);
+        return $this->db->update('users');
     }
 
     // Cek apakah email sudah terdaftar
@@ -34,13 +42,5 @@ class User_model extends CI_Model {
     {
         return $this->db->insert('users', $data); // Menambahkan data ke tabel 'users'
     }
-
-// Update role user di database
-public function update_user_role($user_id, $role)
-{
-    $this->db->set('role', $role);  // Menggunakan 'last_role' sebagai kolom
-    $this->db->where('id', $user_id);
-    return $this->db->update('users');
 }
 
-}
