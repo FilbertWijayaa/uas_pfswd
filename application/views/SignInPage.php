@@ -51,29 +51,29 @@
             <i class="bi bi-person-circle icon"></i>
             <h2 class="title">Sign In</h2>
         </div>
-        <form>
-            <div class="form-floating mb-3">
-                <select class="form-select" id="floatingSelectGrid">
-                    <option selected>Freelancer</option>
-                    <option value="1">Client</option>
-                </select>
-                <label for="floatingSelectGrid">Login sebagai</label>
-            </div>
+        <form action="<?php echo site_url('signin/login'); ?>" method="post" id="signinForm">
+    <div class="form-floating mb-3">
+        <input type="email" class="form-control" id="floatingEmail" placeholder="Email" name="email" required>
+        <label for="floatingEmail">Email</label>
+    </div>
 
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingName" placeholder="Nama">
-                <label for="floatingName">Nama</label>
-            </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password" required>
+        <label for="floatingPassword">Password</label>
+    </div>
 
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingEmail" placeholder="Email">
-                <label for="floatingEmail">Email</label>
-            </div>
+    <div class="form-floating mb-3">
+        <select class="form-select" id="floatingSelectGrid" name="role" required>
+            <option value="freelancer" selected>Freelancer</option>
+            <option value="client">Client</option>
+        </select>
+        <label for="floatingSelectGrid">Login sebagai</label>
+    </div>
 
-            <div class="d-grid">
-                <button type="submit" class="btn btn-login">Login</button>
-            </div>
-        </form>
+    <div class="d-grid">
+        <button type="submit" class="btn btn-login">Login</button>
+    </div>
+</form>
     </div>
 </div>
 

@@ -53,10 +53,19 @@ $route['default_controller'] = 'Home';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 
+// Routing untuk halaman-halaman utama
 $route['home'] = 'home'; // Halaman Home
-$route['pekerjaan'] = 'freelancer_dashboard'; // Halaman Pekerjaan
+$route['freelancer_dashboard'] = 'freelancer_dashboard';  // Halaman freelancer dashboard
+$route['client_dashboard'] = 'client_dashboard'; // Halaman Client Dashboard
 $route['about'] = 'about'; // Halaman About
+
+// Routing untuk halaman Sign In dan Sign Up
 $route['signin'] = 'signinpage'; // Halaman Sign In
 $route['signup'] = 'signuppage'; // Halaman Sign Up
+
+// Routing untuk proses signup
+$route['signup/register'] = 'signuppage/register';  // Proses signup
+$route['signin/login'] = 'signinpage/login'; // Proses login
+
 
 
