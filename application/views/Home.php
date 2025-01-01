@@ -35,17 +35,6 @@
             color: #F5F0CD;
         }
 
-        .overlay-text {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.4);
-            color: #F5F0CD;
-            font-size: 1.5rem;
-        }
-
         p {
             color: #F5F0CD;
             max-width: 800px;
@@ -55,6 +44,18 @@
 
         a.nav-link:hover {
             color: #0056b3;
+        }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
     </style>
 </head>
@@ -69,7 +70,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
             <a class="nav-link" href="<?= site_url('home'); ?>">Home</a>
-            <a class="nav-link" href="<?= site_url('freelancer_dashboard'); ?>">Pekerjaan</a>
+            <a class="nav-link" href="<?= site_url('signin'); ?>">Pekerjaan</a>
             <a class="nav-link" href="<?= site_url('about'); ?>">About</a>
             <a class="nav-link" href="<?= site_url('signin'); ?>">Sign In</a>
             <a class="nav-link" href="<?= site_url('signup'); ?>">Sign Up</a>
@@ -80,10 +81,9 @@
 
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-12 position-relative text-center" style="background-image: url('images/image.png'); background-size: cover; background-position: center; height: 400px;">
-            <div class="overlay-text d-flex justify-content-center align-items-center">
-                <h1>Taro Gambar disini kalo mau</h1>
-            </div>
+        <div class="col-md-12 image-container">
+            <!-- Gambar di sini, bisa diganti dengan gambar apapun -->
+            <img src="<?= base_url('assets/images/1665406497-FreelancerGo_main.webp'); ?>" alt="Ilustrasi Web Service">
         </div>
     </div>
 </div>
@@ -128,9 +128,9 @@
 <div class="container mt-5 text-center">
     <h2>Bergabunglah Sekarang!</h2>
     <p>Jangan lewatkan kesempatan untuk menemukan proyek atau freelancer terbaik.</p>
-        <a href="<?= site_url('signup'); ?>" class="btn btn-primary">Gabung Sekarang</a>
-        <a href="<?= site_url('pekerjaan'); ?>" class="btn btn-outline-primary">Jelajahi Pekerjaan</a>
+    <a href="<?= site_url('signup'); ?>" class="btn btn-primary">Gabung Sekarang</a>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>

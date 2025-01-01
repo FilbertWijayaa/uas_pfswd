@@ -48,7 +48,7 @@ class SignUpPage extends CI_Controller {
             'username' => $username,
             'email' => $email,
             'password' => $hashed_password,
-            'last_role' => $role,  // Role 'client' atau 'freelancer'
+            'role' => $role,  // Role 'client' atau 'freelancer'
         ];
 
 // Menyimpan data ke database
