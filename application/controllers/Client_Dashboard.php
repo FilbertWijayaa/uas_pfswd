@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Jakarta');
 class Client_Dashboard extends CI_Controller {
 
     public function __construct()
@@ -7,12 +8,13 @@ class Client_Dashboard extends CI_Controller {
         $this->load->helper(['url', 'file']); // Muat helper URL dan File
         $this->load->model('Job_model'); // Muat model Job_model
         $this->load->library('session'); // Memuat library session
+        $this->load->model('Notification_model'); // Memuat model Notification_model
     }
 
     public function index()
     {
-        // Memastikan user sudah login
-        if (!$this->session->userdata('user_id') || $this->session->userdata('role') !== 'client') {
+        // Memastikan user sudah login sebagai client
+        if (!$this->session->userdata('freelancer_id') || $this->session->userdata('role') !== 'client') {
             redirect('signin'); // Redirect jika tidak login atau bukan client
         }
 
@@ -31,7 +33,7 @@ class Client_Dashboard extends CI_Controller {
     public function create_job()
     {
         // Memastikan user sudah login
-        if (!$this->session->userdata('user_id')) {
+        if (!$this->session->userdata('freelancer_id')) {
             redirect('signin'); // Redirect jika tidak login
         }
 
@@ -39,7 +41,7 @@ class Client_Dashboard extends CI_Controller {
         $title = $this->input->post('title');
         $description = $this->input->post('description');
         $image_url = $this->input->post('image_url');
-        $client_id = $this->session->userdata('user_id'); // ID client dari session
+        $client_id = $this->session->userdata('freelancer_id'); // ID client dari session
 
         // Siapkan data untuk disimpan
         $data = [
@@ -61,7 +63,7 @@ class Client_Dashboard extends CI_Controller {
     public function edit_job()
     {
         // Memastikan user sudah login
-        if (!$this->session->userdata('user_id')) {
+        if (!$this->session->userdata('freelancer_id')) {
             redirect('signin'); // Redirect jika tidak login
         }
     
@@ -70,7 +72,7 @@ class Client_Dashboard extends CI_Controller {
         $title = $this->input->post('title');
         $description = $this->input->post('description');
         $image_url = $this->input->post('image_url');
-        $client_id = $this->session->userdata('user_id'); // ID client dari session
+        $client_id = $this->session->userdata('freelancer_id'); // ID client dari session
     
         // Pastikan pekerjaan tersebut milik client yang sedang login
         $job = $this->Job_model->get_job_by_id($job_id);
@@ -96,17 +98,16 @@ class Client_Dashboard extends CI_Controller {
         }
     }
     
-
     public function delete_job()
     {
         // Memastikan user sudah login
-        if (!$this->session->userdata('user_id')) {
+        if (!$this->session->userdata('freelancer_id')) {
             redirect('signin'); // Redirect jika tidak login
         }
     
         // Ambil ID pekerjaan yang akan dihapus
         $job_id = $this->input->post('id');
-        $client_id = $this->session->userdata('user_id'); // ID client dari session
+        $client_id = $this->session->userdata('freelancer_id'); // ID client dari session
     
         // Pastikan pekerjaan tersebut milik client yang sedang login
         $job = $this->Job_model->get_job_by_id($job_id);
@@ -129,6 +130,51 @@ class Client_Dashboard extends CI_Controller {
         } else {
             echo "Gagal menghapus pekerjaan.";
         }
-    }     
+    }
+
+    public function inbox() {
+        // Ambil client_id dari sesi atau autentikasi
+        $client_id = $this->session->userdata('freelancer_id');
+    
+        // Cek apakah client_id ada
+        if (empty($client_id)) {
+            show_error('Client tidak ditemukan atau belum login.', 404);
+            return;
+        }
+    
+        // Ambil data notifikasi berdasarkan client_id
+        $data['notifications'] = $this->Notification_model->get_notifications2($client_id);
+    
+        // Load tampilan inbox
+        $this->load->view('inbox_client', $data);
+    }
+    
+
+    // Fungsi untuk memperbarui status notifikasi
+    public function update_notification_status() {
+        // Ambil data dari POST
+        $notification_id = $this->input->post('notification_id');
+        $status = $this->input->post('status');
+    
+        // Pastikan status yang diterima adalah integer atau boolean
+        $valid_status = ['Menunggu', 'Diterima', 'Tidak diterima'];
+        if (!in_array($status, $valid_status)) {
+            // Status tidak valid, kirimkan respons error
+            echo json_encode(['message' => 'Status tidak valid']);
+            exit;  // Menghentikan eksekusi lebih lanjut
+        }
+    
+        // Update status notifikasi
+        $result = $this->Notification_model->update_status($notification_id, $status);
+    
+        // Berikan respons sesuai dengan hasil update
+        if ($result) {
+            echo json_encode(['message' => 'Status berhasil diperbarui.']);
+        } else {
+            echo json_encode(['message' => 'Gagal memperbarui status.']);
+        }
+    }
+    
+    
 }
 ?>

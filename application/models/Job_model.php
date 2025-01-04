@@ -29,18 +29,29 @@ class Job_model extends CI_Model {
     {
         $this->db->set('status', $status);
         $this->db->where('id', $job_id);
-        return $this->db->update('jobs');
+        
+        if ($this->db->update('jobs')) {
+            return true;
+        }
+
+        return false;  // Gagal mengupdate status
     }
 
+
     // Ambil pekerjaan berdasarkan ID
-    public function get_job_by_id($id)
+    public function get_job_by_id($job_id)
     {
-        $this->db->select('jobs.*');
-        $this->db->from('jobs');
-        $this->db->where('id', $id);
-        $query = $this->db->get();
-        return $query->row_array(); // Mengembalikan satu baris data
+        $this->db->where('id', $job_id);
+        $query = $this->db->get('jobs');
+        
+        if ($query->num_rows() == 0) {
+            return false;  // Pekerjaan tidak ditemukan
+        }
+        
+        return $query->row_array();  // Mengembalikan data pekerjaan
     }
+
+
 
     // Update data pekerjaan berdasarkan ID
     public function update_job($job_id, $data)

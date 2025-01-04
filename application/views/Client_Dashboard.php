@@ -82,6 +82,7 @@
 </head>
 <body>
 <!-- Navbar -->
+<!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
     <div class="container">
         <a class="navbar-brand" href="<?= site_url('home'); ?>">FreelanceGo</a>
@@ -105,15 +106,14 @@
                     <!-- Optionally add sign-in/sign-up links if the user is not logged in -->
                 <?php endif; ?>
                 <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        Akun Saya
-    </a>
-    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-    <li><a class="dropdown-item" href="<?= site_url('profile'); ?>">Profile</a></li>
-        <li><a class="dropdown-item" href="<?= site_url('client_dashboard/inbox'); ?>">Inbox</a></li>
-    </ul>
-</li>
-
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Akun Saya
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="<?= site_url('profile'); ?>">Profile</a></li>
+                    <li><a class="dropdown-item" href="<?= site_url('client_dashboard/inbox'); ?>">Inbox</a></li> <!-- Updated link -->
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
