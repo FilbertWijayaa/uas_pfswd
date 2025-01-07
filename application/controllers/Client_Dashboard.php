@@ -19,7 +19,7 @@ class Client_Dashboard extends CI_Controller {
         }
 
         // Ambil semua data pekerjaan dari database
-        $data['jobs'] = $this->Job_model->get_all_jobs();
+        $data['jobs'] = $this->Job_model->get_all_jobs2();
 
         // Ambil daftar gambar dari folder assets/images
         $image_dir = FCPATH . 'assets/images';
@@ -72,14 +72,22 @@ class Client_Dashboard extends CI_Controller {
         $title = $this->input->post('title');
         $description = $this->input->post('description');
         $image_url = $this->input->post('image_url');
+        $status = $this->input->post('status'); // Ambil status pekerjaan dari form
         $client_id = $this->session->userdata('freelancer_id'); // ID client dari session
     
         // Pastikan pekerjaan tersebut milik client yang sedang login
         $job = $this->Job_model->get_job_by_id($job_id);
-        if ($job['client_id'] != $client_id) {
+        if (!$job || $job['client_id'] != $client_id) {
             // Set flashdata untuk pesan error
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk mengedit pekerjaan ini.');
             redirect('client_dashboard'); // Redirect ke dashboard client
+            return;
+        }
+    
+        // Validasi status (pastikan hanya 'Tersedia' atau 'Tidak tersedia')
+        if (!in_array($status, ['Tersedia', 'Tidak tersedia'])) {
+            $this->session->set_flashdata('error', 'Status pekerjaan tidak valid.');
+            redirect('client_dashboard'); // Redirect jika status tidak valid
             return;
         }
     
@@ -88,15 +96,21 @@ class Client_Dashboard extends CI_Controller {
             'title' => $title,
             'description' => $description,
             'image_url' => $image_url,
+            'status' => $status, // Menambahkan status untuk diperbarui
         ];
     
         // Perbarui data pekerjaan di database
         if ($this->Job_model->update_job($job_id, $data)) {
+            // Set flashdata untuk pesan sukses
+            $this->session->set_flashdata('success', 'Pekerjaan berhasil diperbarui.');
             redirect('client_dashboard'); // Redirect setelah sukses
         } else {
-            echo "Gagal memperbarui pekerjaan.";
+            // Set flashdata untuk pesan error jika gagal memperbarui
+            $this->session->set_flashdata('error', 'Gagal memperbarui pekerjaan.');
+            redirect('client_dashboard');
         }
     }
+    
     
     public function delete_job()
     {
@@ -111,26 +125,45 @@ class Client_Dashboard extends CI_Controller {
     
         // Pastikan pekerjaan tersebut milik client yang sedang login
         $job = $this->Job_model->get_job_by_id($job_id);
-        if ($job['client_id'] != $client_id) {
+        if (!$job || $job['client_id'] != $client_id) {
             // Set flashdata untuk pesan error
             $this->session->set_flashdata('error', 'Anda tidak memiliki izin untuk menghapus pekerjaan ini.');
             redirect('client_dashboard'); // Redirect ke dashboard client
             return;
         }
     
+        // Start a database transaction to ensure everything is deleted properly
+        $this->db->trans_start();
+    
+        // Hapus semua notifications yang terkait dengan pekerjaan ini
+        $this->db->delete('notifications', ['job_id' => $job_id]);
+    
         // Hapus pekerjaan dari database
-        if ($this->Job_model->delete_job($job_id)) {
+        $delete_result = $this->Job_model->delete_job($job_id);
+    
+        // Jika berhasil menghapus pekerjaan, lanjutkan untuk menghapus gambar
+        if ($delete_result) {
             // Menghapus file gambar yang terkait dengan pekerjaan
             $image_path = FCPATH . 'assets/images/' . $job['image_url'];
             if (file_exists($image_path)) {
                 unlink($image_path); // Menghapus file gambar
             }
-    
-            redirect('client_dashboard'); // Redirect setelah sukses
-        } else {
-            echo "Gagal menghapus pekerjaan.";
         }
+    
+        // Commit or rollback transaction based on success/failure
+        $this->db->trans_complete();
+        if ($this->db->trans_status() === FALSE) {
+            // Jika transaksi gagal, tampilkan pesan error
+            $this->session->set_flashdata('error', 'Gagal menghapus pekerjaan. Silakan coba lagi.');
+        } else {
+            // Jika sukses, tampilkan pesan sukses
+            $this->session->set_flashdata('success', 'Pekerjaan berhasil dihapus.');
+        }
+    
+        // Redirect setelah selesai
+        redirect('client_dashboard');
     }
+    
 
     public function inbox() {
         // Ambil client_id dari sesi atau autentikasi

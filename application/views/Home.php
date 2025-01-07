@@ -9,7 +9,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #81BFDA;
+            background-color:rgb(201, 232, 238);
         }
 
         .navbar-brand {
@@ -32,18 +32,18 @@
 
         h2 {
             font-size: 2rem;
-            color: #F5F0CD;
+            color:rgb(8, 63, 37);
         }
 
         p {
-            color: #F5F0CD;
+            color:rgb(182, 75, 42);
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.8;
         }
 
         a.nav-link:hover {
-            color: #0056b3;
+            color:rgb(50, 87, 90);
         }
 
         .image-container {
@@ -61,7 +61,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg" style="background-color: #B1F0F7;">
+<nav class="navbar navbar-expand-lg" style="background-color:rgb(121, 203, 212);">
     <div class="container">
         <a class="navbar-brand" href="<?= site_url('home'); ?>">FreelanceGo</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12 image-container">
             <!-- Gambar di sini, bisa diganti dengan gambar apapun -->
-            <img src="<?= base_url('assets/images/1665406497-FreelancerGo_main.webp'); ?>" alt="Ilustrasi Web Service">
+            <img src="<?= base_url('assets/images/logo.png'); ?>" alt="Ilustrasi Web Service">
         </div>
     </div>
 </div>

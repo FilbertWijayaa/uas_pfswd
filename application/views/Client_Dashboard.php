@@ -217,40 +217,54 @@
 
     <!-- Modal Form untuk Edit Pekerjaan -->
     <div class="modal fade" id="editJobModal" tabindex="-1" role="dialog" aria-labelledby="editJobModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editJobModalLabel">Edit Pekerjaan</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <!-- Form Edit Pekerjaan -->
-                    <form action="<?= site_url('client_dashboard/edit_job'); ?>" method="POST">
-                        <input type="hidden" id="editJobId" name="id">
-                        <div class="form-group">
-                            <label for="editJobTitle">Judul Pekerjaan</label>
-                            <input type="text" class="form-control" id="editJobTitle" name="title" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="editJobDescription">Deskripsi Pekerjaan</label>
-                            <textarea class="form-control" id="editJobDescription" name="description" rows="4" required></textarea>
-                        </div>
-                        <div class="form-group">
-                            <label for="editJobImage">Pilih Gambar</label>
-                            <select class="form-control" id="editJobImage" name="image_url">
-                                <?php foreach ($images as $image): ?>
-                                    <option value="<?= $image; ?>"><?= $image; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
-                    </form>
-                </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editJobModalLabel">Edit Pekerjaan</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form Edit Pekerjaan -->
+                <form action="<?= site_url('client_dashboard/edit_job'); ?>" method="POST">
+                    <input type="hidden" id="editJobId" name="id">
+
+                    <div class="form-group">
+                        <label for="editJobTitle">Judul Pekerjaan</label>
+                        <input type="text" class="form-control" id="editJobTitle" name="title" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editJobDescription">Deskripsi Pekerjaan</label>
+                        <textarea class="form-control" id="editJobDescription" name="description" rows="4" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="editJobImage">Pilih Gambar</label>
+                        <select class="form-control" id="editJobImage" name="image_url">
+                            <?php foreach ($images as $image): ?>
+                                <option value="<?= $image; ?>"><?= $image; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <!-- Added Status Field -->
+                    <div class="form-group">
+                        <label for="editJobStatus">Status Pekerjaan</label>
+                        <select class="form-control" id="editJobStatus" name="status">
+                            <option value="Tersedia">Tersedia</option>
+                            <option value="Tidak tersedia">Tidak tersedia</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
+
 
     <!-- Modal untuk Konfirmasi Hapus Pekerjaan -->
     <div class="modal fade" id="deleteJobModal" tabindex="-1" role="dialog" aria-labelledby="deleteJobModalLabel" aria-hidden="true">
