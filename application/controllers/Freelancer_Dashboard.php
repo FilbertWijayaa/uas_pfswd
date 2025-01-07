@@ -131,7 +131,7 @@ class Freelancer_Dashboard extends CI_Controller
         }
 
         // Fetch notifications for the freelancer
-        $data['notifications'] = $this->Notification_model->get_notifications($freelancer_id);
+        $data['notifications'] = $this->Notification_model->get_notifications1($freelancer_id);
 
         // Load the inbox view
         $this->load->view('inbox_freelancer', $data);

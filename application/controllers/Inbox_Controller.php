@@ -21,12 +21,12 @@ class Inbox extends CI_Controller {
         // Cek peran user dan arahkan ke inbox yang sesuai
         if ($role == 'client') {
             // Dapatkan notifikasi untuk client
-            $notifications = $this->Notification_model->get_notifications($user_id);
+            $notifications = $this->Notification_model->get_notifications1($user_id);
             // Tampilkan inbox client
             $this->load->view('client_inbox', ['notifications' => $notifications]);
         } elseif ($role == 'freelancer') {
             // Dapatkan notifikasi untuk freelancer
-            $notifications = $this->Notification_model->get_notifications($user_id);
+            $notifications = $this->Notification_model->get_notifications2($user_id);
             // Tampilkan inbox freelancer
             $this->load->view('freelancer_inbox', ['notifications' => $notifications]);
         } else {

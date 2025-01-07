@@ -49,7 +49,7 @@ class Client_Dashboard extends CI_Controller {
             'description' => $description,
             'image_url' => $image_url,
             'client_id' => $client_id,
-            'status' => 'open', // Status pekerjaan baru adalah "open"
+            'status' => 'Tersedia',
         ];
 
         // Masukkan data pekerjaan baru ke database

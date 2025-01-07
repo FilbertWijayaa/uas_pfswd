@@ -55,7 +55,7 @@
         <table class="table table-bordered table-striped">
             <thead>
                 <tr>
-                    <th>ID Freelancer</th>
+                    <th>ID Client</th>
                     <th>ID Pekerjaan</th>
                     <th>Status</th>
                     <th>Diterima/Tidak</th>
@@ -65,7 +65,7 @@
             <tbody>
                 <?php foreach ($notifications as $notification): ?>
                     <tr>
-                        <td><?= $notification['freelancer_id']; ?></td>
+                        <td><?= $notification['client_id']; ?></td>
                         <td><?= $notification['job_id']; ?></td>
                         <td>
                         <select class="form-select status-dropdown" data-notification-id="<?= $notification['id']; ?>" data-freelancer-id="<?= $notification['freelancer_id']; ?>" data-job-id="<?= $notification['job_id']; ?>" data-accepted="<?= $notification['is_accepted']; ?>">
